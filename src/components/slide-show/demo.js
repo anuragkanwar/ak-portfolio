@@ -1,8 +1,5 @@
 import "./TweenMax.min.js";
 import gsap from "gsap";
-import SplitText from "gsap/SplitText.js";
-
-gsap.registerPlugin(SplitText);
 import {getMousePos, getWinSize} from "../../utils/index.js";
 
 // Gets a random integer.
