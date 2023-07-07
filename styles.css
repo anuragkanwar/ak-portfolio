@@ -1,0 +1,11 @@
+.spacer {
+    min-height: 100vh;
+}
+
+.container {
+    position: relative;
+    padding-top: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: calc(100% - 4rem);
+}

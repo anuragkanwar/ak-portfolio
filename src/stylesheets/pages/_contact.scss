@@ -1,0 +1,119 @@
+.contact {
+  height: 100%;
+  display: flex;
+  gap: 6rem;
+}
+
+.info {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+
+  .info-wrapper {
+    flex-basis: 50%;
+    max-height: 350px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .social {
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &_heading {
+      display: inline;
+      margin: 0;
+    }
+
+    &_links {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      overflow-y: hidden;
+      position: relative;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      .link {
+        position: relative;
+        --translate-p: 100%;
+        --translate-m: 0%;
+        transform: translateY(var(--translate-m));
+
+
+        .link__clone {
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: translateY(100%);
+          will-change: transform;
+          pointer-events: none;
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+.mail {
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+
+  .mail-heading {
+    margin: 0;
+    padding: 0;
+  }
+
+  form {
+    width: 80%;
+
+    div {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .label {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    textarea, input {
+      word-wrap: break-word;
+      resize: none;
+      width: 100%;
+      line-height: 1;
+      font-size: 2.5rem;
+      background: transparent;
+
+      &:hover, &:active, &:focus, &:focus-visible, &:focus-within {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #9e9e9e;
+        opacity: 1;
+        font-size: 2.5rem;
+        text-align: justify;
+      }
+
+      :-ms-input-placeholder {
+        color: #9e9e9e;
+      }
+
+      ::-ms-input-placeholder {
+        color: #9e9e9e;
+      }
+    }
+  }
+}

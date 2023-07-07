@@ -1,0 +1,12 @@
+.mag-btn {
+  position: relative;
+
+  .activator {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    background: rgba(255, 186, 186, 0.66);
+    transform: translate(-25%, -25%);
+  }
+}

@@ -1,0 +1,53 @@
+html {
+  box-sizing: border-box;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: inherit;
+  box-sizing: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit
+}
+
+path, i, svg {
+  pointer-events: none;
+}
+
+button, select {
+  padding: 0.2em 1em;
+  border: 2px solid black;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: rgb(28, 28, 28);
+  background-color: rgb(235, 235, 235);
+  min-height: 100vh;
+  position: relative;
+}
+
+main {
+  padding-top: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+  height: 100%;
+}
+
+#u-sneaky-little-dev {
+  height: 100vh;
+}

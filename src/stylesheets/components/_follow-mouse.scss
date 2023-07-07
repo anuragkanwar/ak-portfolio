@@ -1,0 +1,30 @@
+//.loader {
+//  position: absolute;
+//  z-index: 999;
+//  mix-blend-mode: exclusion;
+//  filter: invert(100%);
+//  user-select: none;
+//  transform: translate(-50%, -50%);
+//}
+
+#progress {
+  display: none;
+  position: absolute;
+  user-select: none;
+  width: max-content;
+  font-size: 2rem;
+  line-height: 120%;
+  left: -50px;
+  top: -10px;
+  color: black;
+  z-index: 1000000;
+  pointer-events: none;
+  mix-blend-mode: exclusion;
+  filter: invert(100%);
+}
+
+.font-sec {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}

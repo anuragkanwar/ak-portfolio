@@ -1,0 +1,47 @@
+header {
+  display: flex;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  nav, ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 1rem;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+
+    &.active::before {
+      content: "•";
+    }
+  }
+
+  .n__link {
+    position: relative;
+    --translate-p: 110%;
+    --translate-m: 0%;
+    pointer-events: none;
+    transform: translateY(var(--translate-m));
+    font-weight: 700;
+  }
+
+  .n__link__clone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(110%);
+    will-change: transform;
+    pointer-events: none;
+  }
+}
+
+
