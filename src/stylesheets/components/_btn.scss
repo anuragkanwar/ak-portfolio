@@ -1,0 +1,45 @@
+.btn {
+  height: 4rem;
+  padding: 0;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100rem;
+  overflow: hidden;
+
+  &.btn-sm {
+    width: 8rem;
+    height: 3rem;
+  }
+
+  &.btn-md {
+    width: 11rem;
+    height: 5rem;
+  }
+
+  &.btn-lg {
+    width: 14rem;
+    height: 6rem;
+  }
+
+  .button__filler {
+    background: var(--text-color);
+    position: absolute;
+    width: 150%;
+    height: 200%;
+    border-radius: 50%;
+    top: -50%;
+    left: -25%;
+    transform: translate3d(0, 75%, 0);
+    z-index: -1;
+    will-change: transform;
+  }
+
+  &:focus,
+  &--hover {
+    outline: none;
+    border: 1px solid;
+    color: white;
+  }
+}

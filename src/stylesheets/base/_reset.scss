@@ -1,7 +1,21 @@
+:root {
+  --width: 84vw;
+  --offset: calc(50vw - var(--width) / 2);
+  --text-color: rgb(28, 28, 28);
+  --bg-color: rgb(235, 235, 235);
+}
+
 html {
   box-sizing: border-box;
   max-width: 1920px;
   margin: 0 auto;
+
+  &.page-transition {
+    cursor: none !important;
+    pointer-events: none !important;
+    overflow: hidden;
+  }
+
 }
 
 *, *::after, *::before {
@@ -38,7 +52,9 @@ body {
   background-color: rgb(235, 235, 235);
   min-height: 100vh;
   position: relative;
+  visibility: hidden;
 }
+
 
 main {
   padding-top: 4rem;
@@ -51,3 +67,11 @@ main {
 #u-sneaky-little-dev {
   height: 100vh;
 }
+
+.year {
+  top: var(--offset);
+  right: 16px;
+  position: fixed;
+  z-index: 1000;
+}
+

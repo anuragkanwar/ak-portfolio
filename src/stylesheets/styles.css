@@ -7,10 +7,22 @@
   font-family: "jappernees", "Inter", sans-serif;
 }
 
+:root {
+  --width: 84vw;
+  --offset: calc(50vw - var(--width) / 2);
+  --text-color: rgb(28, 28, 28);
+  --bg-color: rgb(235, 235, 235);
+}
+
 html {
   box-sizing: border-box;
   max-width: 1920px;
   margin: 0 auto;
+}
+html.page-transition {
+  cursor: none !important;
+  pointer-events: none !important;
+  overflow: hidden;
 }
 
 *, *::after, *::before {
@@ -47,6 +59,7 @@ body {
   background-color: rgb(235, 235, 235);
   min-height: 100vh;
   position: relative;
+  visibility: hidden;
 }
 
 main {
@@ -59,6 +72,13 @@ main {
 
 #u-sneaky-little-dev {
   height: 100vh;
+}
+
+.year {
+  top: var(--offset);
+  right: 16px;
+  position: fixed;
+  z-index: 1000;
 }
 
 p {
@@ -146,6 +166,7 @@ small, .text_small {
 }
 .mf-cursor.-pointer:before {
   transform: scale(0.15);
+  cursor: pointer;
 }
 .mf-cursor.-opaque.-active:before {
   transform: scale(1.2);
@@ -626,11 +647,9 @@ body {
 }
 
 #progress {
-  display: none;
   position: absolute;
   user-select: none;
   width: max-content;
-  font-size: 2rem;
   line-height: 120%;
   left: -50px;
   top: -10px;
@@ -639,6 +658,7 @@ body {
   pointer-events: none;
   mix-blend-mode: exclusion;
   filter: invert(100%);
+  font-size: 1.414rem;
 }
 
 .font-sec {
@@ -647,34 +667,123 @@ body {
   font-style: italic;
 }
 
-.mag-btn {
-  position: relative;
+.btn {
+  height: 4rem;
+  padding: 0;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100rem;
+  overflow: hidden;
 }
-.mag-btn .activator {
+.btn.btn-sm {
+  width: 8rem;
+  height: 3rem;
+}
+.btn.btn-md {
+  width: 11rem;
+  height: 5rem;
+}
+.btn.btn-lg {
+  width: 14rem;
+  height: 6rem;
+}
+.btn .button__filler {
+  background: var(--text-color);
+  position: absolute;
+  width: 150%;
+  height: 200%;
+  border-radius: 50%;
+  top: -50%;
+  left: -25%;
+  transform: translate3d(0, 75%, 0);
+  z-index: -1;
+  will-change: transform;
+}
+.btn:focus, .btn--hover {
+  outline: none;
+  border: 1px solid;
+  color: white;
+}
+
+.mag-btn-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.mag-btn-wrapper .mag-btn {
+  position: relative;
+  will-change: transform;
+}
+.mag-btn-wrapper .mag-btn .button__text,
+.mag-btn-wrapper .mag-btn .button__text-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.mag-btn-wrapper .activator {
   position: absolute;
   display: block;
-  top: 0;
-  left: 0;
-  background: rgba(255, 186, 186, 0.66);
-  transform: translate(-25%, -25%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  cursor: pointer;
 }
 
-.hero-title {
-  font-size: 10.625vw;
-  font-weight: 300;
-  width: 100%;
-  text-align: center;
+.hero {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.hero-title span {
-  font-weight: 400;
+.hero .hero-top .hero-top-title {
+  margin: 0;
+}
+.hero .hero-bottom {
+  display: flex;
+  font-weight: 500;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+.hero .hero-bottom .hero-bottom-left, .hero .hero-bottom .hero-bottom-mid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+  gap: 8px;
+}
+.hero .hero-bottom .hero-bottom-mid .hero-subtitle {
+  text-align: justify;
+}
+.hero .hero-bottom .hero-title {
+  margin: 0;
+  text-align: end;
 }
 
-.hero-subtitle {
-  font-size: 1rem;
-  font-weight: 300;
-  width: 100%;
+.star {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url(/src/assets/svg/star-s.svg);
 }
 
+.star, header #stars::before, header #stars::after {
+  animation: star ease-in-out 2s infinite alternate;
+  will-change: transform;
+}
+
+@keyframes star {
+  0% {
+    transform: none;
+  }
+  100% {
+    transform: scale(0.55);
+  }
+}
 .contact {
   height: 100%;
   display: flex;
@@ -745,6 +854,7 @@ body {
 }
 .mail form div {
   display: flex;
+  align-items: flex-start;
   gap: 1rem;
 }
 .mail form .label {

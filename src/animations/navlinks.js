@@ -1,7 +1,8 @@
 import gsap from "gsap";
-import {cursor} from "../components/custom-cursor/index.js";
 
+const html = document.querySelector("html");
 const navLinks = document.querySelectorAll(".nav-link");
+const count = document.querySelector("#progress");
 
 function navLinkAnimation(link, forw) {
     return gsap.to(link, {
@@ -9,26 +10,30 @@ function navLinkAnimation(link, forw) {
     })
 }
 
-navLinks.forEach(link => {
+export function addNavLinkAnimation(cursor) {
+    navLinks.forEach(link => {
+        link.addEventListener("click", (ev) => {
+            html.classList.add("page-transition");
+            cursor.addState("-hidden");
+            gsap.to(count, {autoAlpha: 1});
+            setTimeout(() => {
+                navLinks.forEach(link2 => {
+                    link2.classList.remove("active");
+                })
+                ev.target.classList.add("active");
+            }, 1000)
+        })
 
-    link.addEventListener("click", (ev) => {
-        setTimeout(() => {
-            navLinks.forEach(link2 => {
-                link2.classList.remove("active");
-            })
-            ev.target.classList.add("active");
-        }, 1000)
-    })
+        link.addEventListener("mouseover", (ev) => {
+            cursor.addState("-active -opaque");
+            cursor.setStick(ev.target);
+            navLinkAnimation(link.querySelector(".n__link"), true);
+        })
 
-    link.addEventListener("mouseover", (ev) => {
-        cursor.addState("-active -opaque");
-        cursor.setStick(ev.target);
-        navLinkAnimation(link.querySelector(".n__link"), true);
+        link.addEventListener("mouseout", () => {
+            cursor.removeStick();
+            cursor.removeState("-active -opaque");
+            navLinkAnimation(link.querySelector(".n__link"), false);
+        })
     })
-
-    link.addEventListener("mouseout", () => {
-        cursor.removeStick();
-        cursor.removeState("-active -opaque");
-        navLinkAnimation(link.querySelector(".n__link"), false);
-    })
-})
+}

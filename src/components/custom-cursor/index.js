@@ -72,13 +72,13 @@ export default class MouseFollower {
             activeState: '-active',
             mediaState: '-media',
             stateDetection: {
-                '-pointer': 'a,button',
+                '-pointer': 'a .activator', "-hidden": ".body .page-transition",
             },
-            visible: true,
+            visible: false,
             visibleOnState: false,
             speed: 0.55,
             ease: 'expo.out',
-            overwrite: true,
+            overwrite: false,
             skewing: 0,
             skewingText: 2,
             skewingIcon: 2,
@@ -87,7 +87,7 @@ export default class MouseFollower {
             skewingDeltaMax: 0.15,
             stickDelta: 0.15,
             showTimeout: 0,
-            hideOnLeave: true,
+            hideOnLeave: false,
             hideTimeout: 300,
             hideMediaTimeout: 300,
             initialPos: [-window.innerWidth, -window.innerHeight],
@@ -573,4 +573,8 @@ export default class MouseFollower {
 
 
 MouseFollower.registerGSAP(gsap);
-export const cursor = new MouseFollower();
+
+export function generateMouseFollower() {
+
+    return new MouseFollower();
+}

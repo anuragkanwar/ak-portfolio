@@ -1,18 +1,7 @@
-//.loader {
-//  position: absolute;
-//  z-index: 999;
-//  mix-blend-mode: exclusion;
-//  filter: invert(100%);
-//  user-select: none;
-//  transform: translate(-50%, -50%);
-//}
-
 #progress {
-  display: none;
   position: absolute;
   user-select: none;
   width: max-content;
-  font-size: 2rem;
   line-height: 120%;
   left: -50px;
   top: -10px;
@@ -21,6 +10,7 @@
   pointer-events: none;
   mix-blend-mode: exclusion;
   filter: invert(100%);
+  font-size: 1.414rem;
 }
 
 .font-sec {

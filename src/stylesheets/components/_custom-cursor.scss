@@ -64,6 +64,7 @@ $mf-color-text: #fff !default;
   &.-pointer {
     &:before {
       transform: scale(0.15);
+      cursor: pointer;
     }
   }
 

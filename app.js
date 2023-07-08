@@ -1,23 +1,28 @@
+import gsap from "gsap"
 import barba from "@barba/core"
-import Router from "@barba/router"
 import {closeTransitionFromTop, openTransitionFromTop} from "./src/animations/page-transitions.js";
-import MouseFollower from "./src/components/custom-cursor/index.js";
-import {gsap} from "gsap";
-import "/src/animations";
-import "./src/components/slide-show/demo.js";
+import {generateMouseFollower} from "./src/components/custom-cursor/index.js";
 import {Intro} from "./src/animations/preloader/lib/intro.js";
 import {buildSlideShow} from "./src/components/slide-show/demo.js";
 import {followMouse} from "./src/components/loading-percent/index.js";
 import {handleContactClick, navLinkAnimation} from "./src/animations/socialLinks.js";
-import MagneticBehaviour from "./src/animations/magnetic-behaviour.js";
+import {MagneticButton} from "./src/animations/magnetic-button.js";
+import {addNavLinkAnimation} from "./src/animations/navlinks.js";
+import {randomNumber} from "./src/utils/index.js";
 
 
-let slideShow;
-followMouse(document.querySelector("#progress"));
+const body = document.querySelector("body");
+gsap.to(body, {autoAlpha: 0, duration: 0});
 
 function init() {
+    let slideShow;
+    followMouse(document.querySelector("#progress"));
 
     const overlayPath = document.querySelector(".overlay__path");
+    const count = document.getElementById("progress");
+    const cursor = generateMouseFollower();
+    cursor.removeState("-hidden");
+    addNavLinkAnimation(cursor);
 
     function delay(n) {
         n = n || 2000;
@@ -30,8 +35,7 @@ function init() {
 
 
     let intro;
-    let magbtns = [];
-    let magbtnaAnimationRequest = [];
+    let magneticButtons = [];
     let socialLinks;
     barba.init({
         views: [{
@@ -44,10 +48,21 @@ function init() {
         }, {
             namespace: "home", beforeOnce(data) {
                 const preloader = document.querySelector('.circles');
+                const mbtns = document.querySelectorAll(".mag-btn");
+                mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
                 const intro = new Intro(preloader);
                 intro.start();
-            }
+            },
 
+            beforeEnter(data) {
+                const mbtns = document.querySelectorAll(".mag-btn");
+                mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
+            },
+
+            beforeLeave(data) {
+                magneticButtons.forEach(btn => btn.deleteEvents());
+                magneticButtons = [];
+            }
         }, {
             namespace: "contact", beforeLeave(data) {
                 socialLinks.forEach(link => {
@@ -58,7 +73,8 @@ function init() {
                     link.removeEventListener("mouseout", () => {
                         navLinkAnimation(link.querySelector(".link"), false);
                     })
-                    magbtnaAnimationRequest.forEach(rqst => cancelAnimationFrame(rqst));
+                    magneticButtons.forEach(btn => btn.deleteEvents());
+                    magneticButtons = [];
                 })
             }, beforeEnter(data) {
                 socialLinks = document.querySelectorAll(".social_links");
@@ -76,26 +92,26 @@ function init() {
                         handleContactClick(ev);
                     })
                 })
-
-                mbtns.forEach(btn => magbtns.push(new MagneticBehaviour(btn)));
-                magbtns.forEach(btn => magbtnaAnimationRequest.push(requestAnimationFrame(() => {
-                    btn.render();
-                })))
+                mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
             }
         }
 
         ], preventRunning: true, transitions: [{
             name: 'page-transition', async leave(data) {
                 const done = this.async();
-                openTransitionFromTop(overlayPath, done, followMouse);
+                openTransitionFromTop(overlayPath, done, count, cursor);
             },
 
             async after(data) {
                 const done = this.async();
-                closeTransitionFromTop(overlayPath, done, followMouse);
+                setTimeout(closeTransitionFromTop, randomNumber(0, 500), overlayPath, done, count, cursor);
             }
         }, {
-            name: "pre-loader", async once() {
+            name: "pre-loader",
+            async beforeOnce() {
+                gsap.to(body, {autoAlpha: 1})
+            }
+            , async once() {
                 const preloader = document.querySelector('.circles');
                 intro = new Intro(preloader);
                 intro.start();
