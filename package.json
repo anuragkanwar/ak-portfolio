@@ -15,6 +15,7 @@
   "dependencies": {
     "@barba/core": "^2.9.7",
     "events": "^3.3.0",
-    "gsap": "file:src/gsap-bonus.tgz"
+    "gsap": "file:src/gsap-bonus.tgz",
+    "imagesloaded": "^5.0.0"
   }
 }

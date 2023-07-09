@@ -3,19 +3,19 @@ import {EventEmitter} from 'events';
 import {mousepos} from "../utils/index.js";
 
 export class MagneticButton extends EventEmitter {
-    constructor(el) {
+    constructor(el, onClick) {
         super();
         this.DOM = {el: el};
         this.DOM.parentNode = el.parentNode;
         this.DOM.cloneNode = el.cloneNode(true);
         this.DOM.activator = document.createElement("div");
         this.DOM.el = null;
+        this.DOM.onClick = onClick;
 
         this.DOM.parentNode.removeChild(el);
         if (this.DOM.parentNode.classList.contains("mag-btn-wrapper")) {
             this.DOM.parentNode.appendChild(this.DOM.cloneNode);
         } else {
-            console.log(this.DOM);
             this.DOM.wrapper = document.createElement("div");
             this.DOM.filler = document.createElement("div");
             this.DOM.text = document.createElement("span");
@@ -127,10 +127,15 @@ export class MagneticButton extends EventEmitter {
             }, 0.1);
     }
 
-    handleClick(ev) {
+    handleClick(ev, onClick) {
         const parentNode = ev.target.parentNode;
         const btn = parentNode.querySelector(".mag-btn");
-        btn.click();
+        console.log("inside clicked", onClick);
+        if (onClick) {
+            onClick();
+        } else {
+            btn.click();
+        }
     }
 
     initEvents() {
@@ -146,7 +151,7 @@ export class MagneticButton extends EventEmitter {
         this.DOM.activator.removeEventListener("mouseleave", this.resetBtn);
         this.DOM.activator.removeEventListener("mouseleave", this.onLeave);
         this.DOM.activator.removeEventListener("mouseenter", this.onHover);
-        this.DOM.activator.removeEventListener("click", this.handleClick);
+        this.DOM.activator.removeEventListener("click", this.DOM.handleClick);
     }
 
     enter() {
