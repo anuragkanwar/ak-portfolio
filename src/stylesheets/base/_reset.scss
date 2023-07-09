@@ -53,6 +53,11 @@ body {
   min-height: 100vh;
   position: relative;
   visibility: hidden;
+  overflow: hidden;
+
+  &.overflow {
+    overflow: auto;
+  }
 }
 
 

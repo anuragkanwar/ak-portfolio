@@ -60,6 +60,10 @@ body {
   min-height: 100vh;
   position: relative;
   visibility: hidden;
+  overflow: hidden;
+}
+body.overflow {
+  overflow: auto;
 }
 
 main {

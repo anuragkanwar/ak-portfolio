@@ -11,10 +11,12 @@ import {addNavLinkAnimation} from "./src/animations/navlinks.js";
 import {randomNumber} from "./src/utils/index.js";
 import imagesLoaded from "imagesloaded";
 import {counterAnimationTimeLine} from "./src/animations/counter-animation.js";
+import {pageRevealAnimation} from "./src/animations/pageRevealAnimation.js";
 
 
 const body = document.querySelector("body");
 gsap.to(body, {autoAlpha: 0, duration: 0});
+
 
 function init() {
     let slideShow;
@@ -133,6 +135,9 @@ function init() {
                 } else {
                     closeTransitionFromTop(overlayPath, done, count, cursor);
                 }
+
+                pageRevealAnimation(data.next.namespace !== "showcase").play();
+
             }
         }, {
             name: "pre-loader", async beforeOnce() {
