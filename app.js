@@ -1,5 +1,8 @@
 import gsap from "gsap"
 import barba from "@barba/core"
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {ScrollSmoother} from "gsap/ScrollSmoother";
+
 import {closeTransitionFromTop, openTransitionFromTop} from "./src/animations/page-transitions.js";
 import {generateMouseFollower} from "./src/components/custom-cursor/index.js";
 import {Intro} from "./src/animations/preloader/lib/intro.js";
@@ -14,9 +17,11 @@ import {counterAnimationTimeLine} from "./src/animations/counter-animation.js";
 import {pageRevealAnimation} from "./src/animations/pageRevealAnimation.js";
 
 
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+
 const body = document.querySelector("body");
 gsap.to(body, {autoAlpha: 0, duration: 0});
-
 
 function init() {
     let slideShow;
@@ -41,6 +46,8 @@ function init() {
     let intro;
     let magneticButtons = [];
     let socialLinks;
+    let smoothScroller;
+
     barba.init({
         views: [{
             namespace: "showcase", beforeLeave() {
@@ -54,9 +61,7 @@ function init() {
                 const preloader = document.querySelector('.circles');
                 const mbtns = document.querySelectorAll(".mag-btn");
 
-
                 mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
-
 
                 const intro = new Intro(preloader);
                 intro.start();
@@ -109,7 +114,22 @@ function init() {
 
                     mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
                 }
+            },
+
+            {
+                namespace: "about", beforeEnter(data) {
+                    body.classList.add("overflow");
+                    smoothScroller = ScrollSmoother.create({
+                        smooth: 1.5,               // how long (in seconds) it takes to "catch up" to the native scroll position
+                        effects: true,           // looks for data-speed and data-lag attributes on elements
+                        smoothTouch: 0.5,        // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
+                    });
+                }, afterLeave(data) {
+                    body.classList.remove("overflow");
+                    smoothScroller.kill();
+                }
             }
+
 
         ], preventRunning: true, transitions: [{
             name: 'page-transition', async leave(data) {
@@ -129,8 +149,8 @@ function init() {
                             currentProgress = end;
                             end = currentProgress + randomNumber(4, 7);
                         }).on("done", function (instance) {
-                        counterAnimationTimeLine(count, {start: currentProgress, end: 100, duration: 0.4}).play();
-                        closeTransitionFromTop(overlayPath, done, count, cursor, false);
+                        // const ttl = counterAnimationTimeLine(count, {start: currentProgress, end: 100, duration: 0.4}).play().play();
+                        closeTransitionFromTop(overlayPath, done, count, cursor, false, currentProgress);
                     });
                 } else {
                     closeTransitionFromTop(overlayPath, done, count, cursor);
@@ -151,6 +171,8 @@ function init() {
             }
         }]
     });
+
+
 }
 
 window.addEventListener("DOMContentLoaded", init);

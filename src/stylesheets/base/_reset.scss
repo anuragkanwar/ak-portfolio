@@ -56,7 +56,7 @@ body {
   overflow: hidden;
 
   &.overflow {
-    overflow: auto;
+    overflow: visible;
   }
 }
 
@@ -80,3 +80,7 @@ main {
   z-index: 1000;
 }
 
+
+.spacer {
+  min-height: 100vh;
+}

@@ -74,12 +74,10 @@ export const closeTransitionFromBottom = (overlayPath, onComplete) => {
 };
 
 
-export const closeTransitionFromTop = (overlayPath, onComplete, count, cursor, shouldUpdate = true) => {
+export const closeTransitionFromTop = (overlayPath, onComplete, count, cursor, shouldUpdate = true, start = 50) => {
 
     if (isAnimating) return;
     isAnimating = true;
-    // const countEl = count.querySelector(".font-sec");
-    // const start = parseInt(countEl.innerText);
     const tl = gsap.timeline({
         onComplete: () => {
             isAnimating = false;
@@ -94,13 +92,11 @@ export const closeTransitionFromTop = (overlayPath, onComplete, count, cursor, s
             onComplete();
         }, onUpdate: () => {
             if (shouldUpdate) {
-                let countNumber = Math.round(tl.progress() * 50);
-                count.innerHTML = `<span> Loading </span>  - <span class="font-sec"> ${50 + countNumber}% </span>`;
+                let countNumber = Math.round(tl.progress() * start);
+                count.innerHTML = `<span> Loading </span>  - <span class="font-sec"> ${start + countNumber}% </span>`;
+            } else {
+                count.innerHTML = `<span> Loading </span> - <span class="font-sec"> ${start + (Math.floor(tl.progress() * ((100 - start))))}% </span>`;
             }
-            // else {
-            // console.log(start);
-            // count.innerHTML = `<span> Loading </span> - <span class="font-sec"> ${start + (Math.floor(tl.progress() * ((100 - start))))}% </span>`;
-            // }
         }
     })
         // now reveal

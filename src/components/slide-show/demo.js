@@ -63,6 +63,7 @@ const disassembleLetters = (letters) => {
 // The Slide class.
 class Slide {
     constructor(el) {
+        winsize = getWinSize();
         this.DOM = {el: el};
         // The image wrap element.
         this.DOM.imgWrap = this.DOM.el.querySelector('.slide__img-wrap');
@@ -153,6 +154,7 @@ class Slide {
     resizeFn = () => {
         this.calcSizes();
         this.calcTransforms();
+        winsize = getWinSize();
     };
 
     initEvents() {
@@ -346,6 +348,7 @@ class Slide {
 // The Content class. Represents one content item per slide.
 class Content {
     constructor(el, slideShow) {
+        winsize = getWinSize();
         this.DOM = {el: el};
         this.DOM.number = this.DOM.el.querySelector('.content__number');
         this.DOM.title = this.DOM.el.querySelector('.content__title');
@@ -376,6 +379,8 @@ class Content {
 
 class Slideshow {
     constructor(el) {
+
+        winsize = getWinSize();
         this.DOM = {el: el};
         // The slides.
         this.slides = [];
@@ -454,6 +459,7 @@ class Slideshow {
                 y: 20
             });
         }
+        winsize = getWinSize();
     };
 
     showContent() {

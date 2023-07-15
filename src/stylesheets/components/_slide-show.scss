@@ -13,12 +13,12 @@
   margin: 0;
   height: 100%;
   width: 100%;
-  //height: calc(100vh - 10rem);
   display: grid;
   grid-template-columns: 33% 33% 33%;
   grid-column-gap: 0.5%;
   grid-template-rows: 100%;
   grid-template-areas: '... slide ...';
+
 }
 
 .slide {

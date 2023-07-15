@@ -63,7 +63,7 @@ body {
   overflow: hidden;
 }
 body.overflow {
-  overflow: auto;
+  overflow: visible;
 }
 
 main {
@@ -83,6 +83,10 @@ main {
   right: 16px;
   position: fixed;
   z-index: 1000;
+}
+
+.spacer {
+  min-height: 100vh;
 }
 
 p {
@@ -887,6 +891,12 @@ body {
 }
 .mail form textarea ::-ms-input-placeholder, .mail form input ::-ms-input-placeholder {
   color: #9e9e9e;
+}
+
+#smooth-content {
+  padding-top: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /*# sourceMappingURL=styles.css.map */
