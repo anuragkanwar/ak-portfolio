@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
      viewBox="0 0 12 12" fill="none">
-    <path d="M10.875 1.125L1.125 10.875" stroke="#212121"
+    <path d="M10.875 1.125L1.125 10.875" stroke="#fff"
           stroke-miterlimit="10"
           stroke-linecap="round"
           stroke-linejoin="round"/>
-    <path d="M5.625 1.125H10.875V6.375" stroke="#212121"
+    <path d="M5.625 1.125H10.875V6.375" stroke="#fff"
           stroke-miterlimit="10"
           stroke-linecap="round"
           stroke-linejoin="round"/>

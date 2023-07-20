@@ -1,5 +1,6 @@
 import gsap from "gsap"
 import barba from "@barba/core"
+import imagesLoaded from "imagesloaded";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {ScrollSmoother} from "gsap/ScrollSmoother";
 
@@ -12,7 +13,6 @@ import {handleContactClick, navLinkAnimation} from "./src/animations/socialLinks
 import {MagneticButton} from "./src/animations/magnetic-button.js";
 import {addNavLinkAnimation} from "./src/animations/navlinks.js";
 import {randomNumber} from "./src/utils/index.js";
-import imagesLoaded from "imagesloaded";
 import {counterAnimationTimeLine} from "./src/animations/counter-animation.js";
 import {pageRevealAnimation} from "./src/animations/pageRevealAnimation.js";
 
@@ -54,7 +54,7 @@ function init() {
                 slideShow.deleteSlideShow();
                 slideShow = null;
             }, beforeEnter() {
-                slideShow = buildSlideShow();
+                slideShow = buildSlideShow(cursor);
             }
         }, {
             namespace: "home", beforeOnce() {

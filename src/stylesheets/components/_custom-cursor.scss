@@ -85,10 +85,14 @@ $mf-color-text: #fff !default;
   }
 
   &.-text {
+    mix-blend-mode: normal;
+
     &:before {
       opacity: 0.85;
       transform: scale(1.7);
+      background: rgba(0, 0, 0, 0.6);
     }
+
 
     &.-active:before {
       transform: scale(1.6);

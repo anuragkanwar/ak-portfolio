@@ -1,6 +1,9 @@
 import "./TweenMax.min.js";
 import gsap from "gsap";
 import {getMousePos, getWinSize} from "../../utils/index.js";
+import SplitText from "gsap/SplitText.js"
+
+gsap.registerPlugin(SplitText);
 
 // Gets a random integer.
 const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -62,8 +65,9 @@ const disassembleLetters = (letters) => {
 
 // The Slide class.
 class Slide {
-    constructor(el) {
+    constructor(el, cursor) {
         winsize = getWinSize();
+        this.cursor = cursor;
         this.DOM = {el: el};
         // The image wrap element.
         this.DOM.imgWrap = this.DOM.el.querySelector('.slide__img-wrap');
@@ -78,10 +82,14 @@ class Slide {
         };
         // Split the title and side texts into spans, one per letter. Sort these so we can later animate then with the
         // randomizeLetters or disassembleLetters functions when navigating and showing the content.
+        let titleSplit = new SplitText(this.DOM.texts.title, {type: "chars"});
+        let sideSplit = new SplitText(this.DOM.texts.side, {type: "chars"});
+        this.DOM.titleLetters = titleSplit.chars;
+        this.DOM.sideLetters = sideSplit.chars;
         // charming(this.DOM.texts.title);
         // charming(this.DOM.texts.side);
-        this.DOM.titleLetters = Array.from(this.DOM.texts.title.querySelectorAll('span')).sort(() => 0.5 - Math.random());
-        this.DOM.sideLetters = Array.from(this.DOM.texts.side.querySelectorAll('span')).sort(() => 0.5 - Math.random());
+        // this.DOM.titleLetters = Array.from(this.DOM.texts.title.querySelectorAll('span')).sort(() => 0.5 - Math.random());
+        // this.DOM.sideLetters = Array.from(this.DOM.texts.side.querySelectorAll('span')).sort(() => 0.5 - Math.random());
         this.DOM.titleLetters.forEach(letter => letter.dataset.initial = letter.innerHTML);
         this.DOM.sideLetters.forEach(letter => letter.dataset.initial = letter.innerHTML);
         // Calculate the sizes of the image wrap.
@@ -125,6 +133,7 @@ class Slide {
     // Mouseevents for mousemove/tilt/scale on the current image, and window resize.
     mouseenterFn = () => {
         if (!this.isPositionedCenter() || !allowTilt) return;
+        this.cursor.setText("Click");
         clearTimeout(this.mousetime);
         this.mousetime = setTimeout(() => {
             // Scale the image.
@@ -136,12 +145,13 @@ class Slide {
     mousemoveFn = ev => requestAnimationFrame(() => {
         // Tilt the current slide.
         if (!allowTilt || !this.isPositionedCenter()) return;
+        this.cursor.setText("Click");
         this.tilt(ev);
     });
     mouseleaveFn = (ev) => requestAnimationFrame(() => {
         if (!allowTilt || !this.isPositionedCenter()) return;
         clearTimeout(this.mousetime);
-
+        this.cursor.removeText();
         // Reset tilt and image scale.
         TweenMax.to([this.DOM.imgWrap, this.DOM.texts.wrap], 1.8, {
             ease: 'Power4.easeOut', x: 0, y: 0, rotationX: 0, rotationY: 0
@@ -347,8 +357,9 @@ class Slide {
 
 // The Content class. Represents one content item per slide.
 class Content {
-    constructor(el, slideShow) {
+    constructor(el, slideShow, cursor) {
         winsize = getWinSize();
+        this.cursor = cursor;
         this.DOM = {el: el};
         this.DOM.number = this.DOM.el.querySelector('.content__number');
         this.DOM.title = this.DOM.el.querySelector('.content__title');
@@ -376,15 +387,15 @@ class Content {
 }
 
 // The Slideshow class.
-
 class Slideshow {
-    constructor(el) {
+    constructor(el, cursor) {
 
         winsize = getWinSize();
         this.DOM = {el: el};
+        this.cursor = cursor;
         // The slides.
         this.slides = [];
-        Array.from(this.DOM.el.querySelectorAll('.slide')).forEach(slideEl => this.slides.push(new Slide(slideEl)));
+        Array.from(this.DOM.el.querySelectorAll('.slide')).forEach(slideEl => this.slides.push(new Slide(slideEl, cursor)));
         // The total number of slides.
         this.slidesTotal = this.slides.length;
         // At least 4 slides to continue...
@@ -396,7 +407,7 @@ class Slideshow {
         this.DOM.deco = this.DOM.el.querySelector('.slideshow__deco');
 
         this.contents = [];
-        Array.from(document.querySelectorAll('.content > .content__item')).forEach(contentEl => this.contents.push(new Content(contentEl, this)));
+        Array.from(document.querySelectorAll('.content > .content__item')).forEach(contentEl => this.contents.push(new Content(contentEl, this, cursor)));
 
         // Set the current/next/previous slides.
         this.render();
@@ -463,6 +474,8 @@ class Slideshow {
     };
 
     showContent() {
+        this.cursor.removeState("-text");
+        this.cursor.removeText();
         if (this.isContentOpen || this.isAnimating) return;
         allowTilt = false;
         this.isContentOpen = true;
@@ -588,6 +601,6 @@ let allowTilt = true;
 
 // Init slideshow.
 
-export function buildSlideShow() {
-    return new Slideshow(document.querySelector('.slideshow'));
+export function buildSlideShow(cursor) {
+    return new Slideshow(document.querySelector('.slideshow'), cursor);
 }
