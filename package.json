@@ -16,6 +16,8 @@
     "@barba/core": "^2.9.7",
     "events": "^3.3.0",
     "gsap": "file:src/gsap-bonus.tgz",
-    "imagesloaded": "^5.0.0"
+    "imagesloaded": "^5.0.0",
+    "reeller": "^0.0.4",
+    "three": "^0.154.0"
   }
 }

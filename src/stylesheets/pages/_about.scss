@@ -1,6 +1,133 @@
-#smooth-content {
-  padding-top: 4rem;
+section {
+  height: 100%;
+  width: 100%;
+  padding-top: 3.75rem;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+
+.section-1 {
+  position: relative;
+
+  .scroll-arrow {
+    position: absolute;
+    transform: translateX(-50%) scale(0.2) rotate(180deg);
+    bottom: 0;
+    left: 50%;
+
+    img {
+      fill: black;
+    }
+  }
+
+  .s-hero {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+
+    & > * {
+      flex-basis: 50%;
+    }
+  }
+}
+
+.section-2 {
+  background: var(--bg-color);
+
+  > div {
+    margin: 3rem 0;
+
+    > div:first-of-type {
+      padding-top: 1rem;
+    }
+  }
+
+  > div:first-of-type {
+    margin-top: 0;
+    margin-bottom: 3rem;
+
+  }
+
+  .experience {
+    > small {
+      display: block;
+      text-align: end;
+      padding: 0 4rem;
+    }
+  }
+
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    width: 100%;
+    padding: 0 4rem;
+
+    h5, small {
+      display: inline-flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #a0a0a0;
+      font-weight: 300;
+    }
+
+    small {
+      font-weight: 400;
+      margin-bottom: 0;
+      border: none;
+    }
+  }
+
+
+  .omg-grid {
+    width: 60%;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 2rem auto;
+    display: grid;
+    grid-gap: 1rem;
+    pointer-events: none;
+  }
+
+  .grid__item {
+    position: relative;
+    margin: 0;
+    will-change: transform;
+    pointer-events: auto;
+  }
+
+  .grid__item-img {
+    width: 100%;
+    aspect-ratio: 1/1.25;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+  }
+
+  .meet-me {
+    min-height: 60vh;
+
+    .meet-me-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        &:hover {
+          border-bottom: 1px solid;
+        }
+
+        h2 {
+          font-weight: 300;
+          transition: all 0.4s ease-in-out;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
 }
 

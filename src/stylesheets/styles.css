@@ -892,14 +892,47 @@ body {
   cursor: pointer;
 }
 
+.reel {
+  margin-bottom: 2rem;
+  will-change: transform;
+}
+.reel .reel-wrap {
+  display: flex;
+  will-change: transform;
+}
+.reel .reel-wrap .reel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 6rem;
+  flex-shrink: 0;
+  margin: 0 1rem;
+  border-radius: 3rem;
+  border: 1px solid black;
+  padding: 1rem;
+  will-change: transform;
+  transition: all 0.3s ease-in-out;
+}
+.reel .reel-wrap .reel-item:hover {
+  background: var(--text-color);
+  color: var(--bg-color);
+}
+
 .hero {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 .hero .hero-top .hero-top-title {
   margin: 0;
+}
+.hero .hero-mid {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-basis: 40%;
 }
 .hero .hero-bottom {
   display: flex;
@@ -1044,10 +1077,111 @@ body {
   color: #9e9e9e;
 }
 
-#smooth-content {
-  padding-top: 4rem;
+section {
+  height: 100%;
+  width: 100%;
+  padding-top: 3.75rem;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.section-1 {
+  position: relative;
+}
+.section-1 .scroll-arrow {
+  position: absolute;
+  transform: translateX(-50%) scale(0.2) rotate(180deg);
+  bottom: 0;
+  left: 50%;
+}
+.section-1 .scroll-arrow img {
+  fill: black;
+}
+.section-1 .s-hero {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.section-1 .s-hero > * {
+  flex-basis: 50%;
+}
+
+.section-2 {
+  background: var(--bg-color);
+}
+.section-2 > div {
+  margin: 3rem 0;
+}
+.section-2 > div > div:first-of-type {
+  padding-top: 1rem;
+}
+.section-2 > div:first-of-type {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+.section-2 .experience > small {
+  display: block;
+  text-align: end;
+  padding: 0 4rem;
+}
+.section-2 .exp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  width: 100%;
+  padding: 0 4rem;
+}
+.section-2 .exp-grid h5, .section-2 .exp-grid small {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #a0a0a0;
+  font-weight: 300;
+}
+.section-2 .exp-grid small {
+  font-weight: 400;
+  margin-bottom: 0;
+  border: none;
+}
+.section-2 .omg-grid {
+  width: 60%;
+  grid-template-columns: repeat(6, 1fr);
+  margin: 2rem auto;
+  display: grid;
+  grid-gap: 1rem;
+  pointer-events: none;
+}
+.section-2 .grid__item {
+  position: relative;
+  margin: 0;
+  will-change: transform;
+  pointer-events: auto;
+}
+.section-2 .grid__item-img {
+  width: 100%;
+  aspect-ratio: 1/1.25;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+.section-2 .meet-me {
+  min-height: 60vh;
+}
+.section-2 .meet-me .meet-me-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.section-2 .meet-me .meet-me-container a:hover {
+  border-bottom: 1px solid;
+}
+.section-2 .meet-me .meet-me-container a h2 {
+  font-weight: 300;
+  transition: all 0.4s ease-in-out;
+  pointer-events: none;
 }
 
 /*# sourceMappingURL=styles.css.map */

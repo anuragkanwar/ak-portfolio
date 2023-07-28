@@ -3,130 +3,70 @@ import barba from "@barba/core"
 import imagesLoaded from "imagesloaded";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {ScrollSmoother} from "gsap/ScrollSmoother";
+import SplitText from "gsap/SplitText";
 
 import {closeTransitionFromTop, openTransitionFromTop} from "./src/animations/page-transitions.js";
 import {generateMouseFollower} from "./src/components/custom-cursor/index.js";
 import {Intro} from "./src/animations/preloader/lib/intro.js";
-import {buildSlideShow} from "./src/components/slide-show/demo.js";
 import {followMouse} from "./src/components/loading-percent/index.js";
-import {handleContactClick, navLinkAnimation} from "./src/animations/socialLinks.js";
-import {MagneticButton} from "./src/animations/magnetic-button.js";
 import {addNavLinkAnimation} from "./src/animations/navlinks.js";
 import {randomNumber} from "./src/utils/index.js";
 import {counterAnimationTimeLine} from "./src/animations/counter-animation.js";
-import {pageRevealAnimation} from "./src/animations/pageRevealAnimation.js";
+import {pageLeaveAnimation, pageRevealAnimation} from "./src/animations/pageRevealAnimation.js";
+import {showcasePage} from "./src/page/showcasepage.js";
+import {homePage} from "./src/page/homepage.js";
+import {contactPage} from "./src/page/contactpage.js";
+import {aboutPage} from "./src/page/aboutpage.js";
 
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 
 const body = document.querySelector("body");
+const html = document.querySelector("html");
+const count = document.getElementById("progress");
 gsap.to(body, {autoAlpha: 0, duration: 0});
 
 function init() {
-    let slideShow;
-    followMouse(document.querySelector("#progress"));
 
+    followMouse(document.querySelector("#progress"));
     const overlayPath = document.querySelector(".overlay__path");
-    const count = document.getElementById("progress");
     const cursor = generateMouseFollower();
     cursor.removeState("-hidden");
     addNavLinkAnimation(cursor);
 
-    function delay(n) {
-        n = n || 2000;
-        return new Promise((done) => {
-            setTimeout(() => {
-                done();
-            }, n);
-        });
-    }
-
 
     let intro;
-    let magneticButtons = [];
-    let socialLinks;
-    let smoothScroller;
+
 
     barba.init({
         views: [{
             namespace: "showcase", beforeLeave() {
-                slideShow.deleteSlideShow();
-                slideShow = null;
+                showcasePage.beforeLeave();
             }, beforeEnter() {
-                slideShow = buildSlideShow(cursor);
+                showcasePage.beforeEnter(cursor);
             }
         }, {
             namespace: "home", beforeOnce() {
-                const preloader = document.querySelector('.circles');
-                const mbtns = document.querySelectorAll(".mag-btn");
-
-                mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
-
-                const intro = new Intro(preloader);
-                intro.start();
-
-
-            },
-
-            beforeEnter() {
-                const mbtns = document.querySelectorAll(".mag-btn");
-                mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
-
-
-            },
-
-            beforeLeave() {
-                magneticButtons.forEach(btn => btn.deleteEvents());
-                magneticButtons = [];
+                homePage.beforeOnce();
+            }, beforeEnter() {
+                homePage.beforeEnter();
+            }, beforeLeave() {
+                homePage.beforeLeave();
+            }
+        }, {
+            namespace: "contact", beforeLeave(data) {
+                contactPage.beforeLeave();
+            }, beforeEnter() {
+                contactPage.beforeEnter();
             }
         },
 
             {
-                namespace: "contact", beforeLeave(data) {
-                    socialLinks.forEach(link => {
-                        link.removeEventListener("mouseover", (ev) => {
-                            navLinkAnimation(link.querySelector(".link"), true);
-                        })
-
-                        link.removeEventListener("mouseout", () => {
-                            navLinkAnimation(link.querySelector(".link"), false);
-                        })
-                        magneticButtons.forEach(btn => btn.deleteEvents());
-                        magneticButtons = [];
-                    })
-                }, beforeEnter() {
-                    socialLinks = document.querySelectorAll(".social_links");
-                    const mbtns = document.querySelectorAll(".mag-btn")
-                    socialLinks.forEach(link => {
-                        link.addEventListener("mouseover", (ev) => {
-                            navLinkAnimation(link.querySelector(".link"), true);
-                        })
-
-                        link.addEventListener("mouseout", () => {
-                            navLinkAnimation(link.querySelector(".link"), false);
-                        })
-
-                        link.addEventListener("click", (ev) => {
-                            handleContactClick(ev);
-                        })
-                    })
-
-                    mbtns.forEach(btn => magneticButtons.push(new MagneticButton(btn)));
-                }
-            },
-
-            {
                 namespace: "about", beforeEnter(data) {
-                    body.classList.add("overflow");
-                    smoothScroller = ScrollSmoother.create({
-                        smooth: 1.5,               // how long (in seconds) it takes to "catch up" to the native scroll position
-                        effects: true,           // looks for data-speed and data-lag attributes on elements
-                        smoothTouch: 0.5,        // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
-                    });
+                    aboutPage.beforeEnter(body, html, cursor, count);
                 }, afterLeave(data) {
-                    body.classList.remove("overflow");
-                    smoothScroller.kill();
+                    aboutPage.afterLeave(body);
                 }
             }
 
@@ -134,6 +74,7 @@ function init() {
         ], preventRunning: true, transitions: [{
             name: 'page-transition', async leave(data) {
                 const done = this.async();
+                pageLeaveAnimation().play();
                 openTransitionFromTop(overlayPath, done, count, cursor);
             },
 
@@ -148,6 +89,16 @@ function init() {
                             counterAnimationTimeLine(count, {start: currentProgress, end: end}).play();
                             currentProgress = end;
                             end = currentProgress + randomNumber(4, 7);
+                        }).on("done", function (instance) {
+                        // const ttl = counterAnimationTimeLine(count, {start: currentProgress, end: 100, duration: 0.4}).play().play();
+                        closeTransitionFromTop(overlayPath, done, count, cursor, false, currentProgress);
+                    });
+                } else if (data.next.namespace === "about") {
+                    imagesLoaded(".grid__item-img", {background: true})
+                        .on("progress", function (instance, image) {
+                            counterAnimationTimeLine(count, {start: currentProgress, end: end}).play();
+                            currentProgress = end;
+                            end = currentProgress + randomNumber(1, 3);
                         }).on("done", function (instance) {
                         // const ttl = counterAnimationTimeLine(count, {start: currentProgress, end: 100, duration: 0.4}).play().play();
                         closeTransitionFromTop(overlayPath, done, count, cursor, false, currentProgress);
