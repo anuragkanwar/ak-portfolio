@@ -2,7 +2,7 @@ import gsap from "gsap"
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {ScrollSmoother} from "gsap/ScrollSmoother";
 import SplitText from "gsap/SplitText";
-import {generateMarquee} from "../animations/marquee.js";
+import {generateMarquee, removeMarquee} from "../animations/marquee.js";
 import {deleteSpreadGrid, generateSpreadGrid} from "../animations/bouncy-grid/grid.js";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
@@ -16,6 +16,7 @@ const beforeOnce = () => {
 const beforeEnter = (body, html, cursor, count) => {
     body.classList.add("overflow");
     generateMarquee();
+    generateSpreadGrid(cursor);
     const panels = document.querySelectorAll(".about");
     ScrollTrigger.create({
         trigger: panels[0], start: "top top", end: "bottom top", pin: true, pinSpacing: false
@@ -51,7 +52,7 @@ const beforeEnter = (body, html, cursor, count) => {
     extraLink.addEventListener("mouseout", () => {
         cursor.removeState("-active -opaque");
     });
-    generateSpreadGrid(cursor);
+
 };
 
 const beforeLeave = () => {
@@ -62,6 +63,7 @@ const afterLeave = (body) => {
     body.classList.remove("overflow");
     smoothScroller.kill();
     deleteSpreadGrid();
+    removeMarquee();
 }
 
 export const aboutPage = {beforeLeave, beforeOnce, beforeEnter, afterLeave};

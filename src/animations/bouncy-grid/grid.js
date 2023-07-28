@@ -62,6 +62,7 @@ export class SpreadGrid {
     /**
      * Constructor.
      * @param {Element} DOM_el - main element (.grid)
+     * @param cursor
      */
     constructor(DOM_el, cursor) {
         this.DOM.el = DOM_el;
@@ -86,19 +87,37 @@ export class SpreadGrid {
     /**
      * Initialize events.
      */
+
+    handleOnClick = (item) => {
+        this.expand(item);
+        this.cursor.removeText();
+    }
+
+    handleOnMouseEnter = () => {
+        this.cursor.setText("click");
+    }
+
+    handleOnMouseLeave = () => {
+        this.cursor.removeText();
+    }
+
     initEvents() {
         for (const item of this.items) {
-            item.DOM.el.addEventListener('click', () => this.expand(item));
-            item.DOM.el.addEventListener('mouseenter', () => this.cursor.addState("-active -opaque"));
-            item.DOM.el.addEventListener('mouseleave', () => this.cursor.removeState("-active -opaque"));
+            item.DOM.el.addEventListener('click', () => {
+                this.handleOnClick(item);
+            });
+            item.DOM.el.addEventListener('mouseenter', this.handleOnMouseEnter);
+            item.DOM.el.addEventListener('mouseleave', this.handleOnMouseLeave);
         }
     }
 
     deleteEvents() {
         for (const item of this.items) {
-            item.DOM.el.removeEventListener('click', () => this.expand(item));
-            item.DOM.el.removeEventListener('mouseenter', () => this.cursor.addState("-active -opaque"));
-            item.DOM.el.removeEventListener('mouseleave', () => this.cursor.removeState("-active -opaque"));
+            item.DOM.el.removeEventListener('click', () => {
+                this.handleOnClick(item);
+            });
+            item.DOM.el.removeEventListener('mouseenter', this.handleOnMouseEnter);
+            item.DOM.el.removeEventListener('mouseleave', this.handleOnMouseLeave);
         }
     }
 
