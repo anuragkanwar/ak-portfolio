@@ -2,9 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <link rel="icon" type="image/svg+xml" href="/src/assets/favicons/favicon.ico"/>
+    <title>Anurag Kanwar - Software Developer</title>
+    <meta name="description"
+          content="I’m a skilled software developer with strong focus on producing high quality and Impactful code which can effect people in a positive way.">
+    <!--    SEO TAGS STARTS-->
+    <link rel="canonical" href="https://anuragkanwar.tech">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Anurag Kanwar - Software Developer">
+    <meta property="og:description"
+          content="I’m a skilled software developer with strong focus on producing high quality and Impactful code which can effect people in a positive way.">
+    <meta property="og:site_name" content="Anurag Kanwar - Software Developer">
+    <meta property="og:site_name" content="Anurag Kanwar - Software Developer">
+    <meta property="og:image" content="public/Screenshot.jpg">
+    <meta property="og:image:secure_url" content="public/Screenshot.jpg">
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="922">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description"
+          content="I’m a skilled software developer with strong focus on producing high quality and Impactful code which can effect people in a positive way.">
+    <meta name="twitter:title" content="Anurag Kanwar - Software Developer">
+    <meta name="twitter:image" content="public/Screenshot.jpg">
+    <link rel="shortlink" href="https://anuragkanwar.tech">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/src/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/src/assets/favicons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/src/assets/favicons/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/assets/favicons/favicon-16x16.png">
+    <!--    SEO TAGS ENDS-->
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Vite + React + TS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -121,53 +150,53 @@
 </button>
 <div id="progress" style=""></div>
 <script type="x-shader/x-vertex" id="vertexshader">
-			attribute float size;
-			attribute vec3 color;
-			attribute float fade;
+    attribute float size;
+    attribute vec3 color;
+    attribute float fade;
 
-			varying vec3 vColor;
+    varying vec3 vColor;
 
-			void main() {
-				vColor = color;
-				vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-				gl_PointSize = size;
-				gl_Position = projectionMatrix * mvPosition;
-			}
+    void main() {
+        vColor = color;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size;
+        gl_Position = projectionMatrix * mvPosition;
+    }
 
 </script>
 
 <script type="x-shader/x-fragment" id="fragmentshader">
-			uniform sampler2D pointTexture;
-			varying vec3 vColor;
-			void main() {
-				gl_FragColor = vec4(vColor, 1.0);
-				gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
-			}
+    uniform sampler2D pointTexture;
+    varying vec3 vColor;
+    void main() {
+        gl_FragColor = vec4(vColor, 1.0);
+        gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+    }
 
 </script>
 <script type="vert" id="toto-vertexshader">
-			attribute float size;
-			attribute vec3 color;
+    attribute float size;
+    attribute vec3 color;
 
-			varying vec3 vColor;
+    varying vec3 vColor;
 
-			void main() {
-				vColor = color;
-				vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-				gl_PointSize = size;
-				gl_Position = projectionMatrix * mvPosition;
-			}
+    void main() {
+        vColor = color;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size;
+        gl_Position = projectionMatrix * mvPosition;
+    }
 
 </script>
 
 <script type="frag" id="toto-fragmentshader">
-			uniform sampler2D pointTexture;
-			varying vec3 vColor;
-			void main() {
-				gl_FragColor = vec4(vColor, 1.0);
-				if (texture2D(pointTexture,gl_PointCoord).g < 0.7) discard;
-				gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
-			}
+    uniform sampler2D pointTexture;
+    varying vec3 vColor;
+    void main() {
+        gl_FragColor = vec4(vColor, 1.0);
+        if (texture2D(pointTexture,gl_PointCoord).g < 0.7) discard;
+        gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+    }
 
 </script>
 </body>

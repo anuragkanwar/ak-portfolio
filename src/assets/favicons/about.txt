@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Moirai One
+- Font Author: Copyright 2022 The Moirai Project Authors (https://github.com/JAMO-TYPEFACE/Moirai)
+- Font Source: http://fonts.gstatic.com/s/moiraione/v1/2sDbZGFUgJLJmby6xgNGT0WWB7UcfCg.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
