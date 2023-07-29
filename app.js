@@ -10,7 +10,7 @@ import {generateMouseFollower} from "./src/components/custom-cursor/index.js";
 import {Intro} from "./src/animations/preloader/lib/intro.js";
 import {followMouse} from "./src/components/loading-percent/index.js";
 import {addNavLinkAnimation} from "./src/animations/navlinks.js";
-import {randomNumber} from "./src/utils/index.js";
+import {randomNumber, setNavLinkActive} from "./src/utils/index.js";
 import {counterAnimationTimeLine} from "./src/animations/counter-animation.js";
 import {pageLeaveAnimation, pageRevealAnimation} from "./src/animations/pageRevealAnimation.js";
 import {showcasePage} from "./src/page/showcasepage.js";
@@ -37,6 +37,9 @@ function init() {
 
 
     let intro;
+
+    const loc = document.location;
+    setNavLinkActive(loc.pathname);
 
 
     barba.init({
@@ -80,6 +83,8 @@ function init() {
 
             async after(data) {
                 const done = this.async();
+                cursor.removeState("-active -opaque");
+                cursor.removeText();
                 const countEl = count.querySelector(".font-sec");
                 let currentProgress = parseInt(countEl.innerText);
                 let end = currentProgress + randomNumber(4, 7)

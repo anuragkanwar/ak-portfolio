@@ -36,9 +36,9 @@ const beforeLeave = () => {
         link.removeEventListener("mouseout", () => {
             navLinkAnimation(link.querySelector(".link"), false);
         })
-        magneticButtons.forEach(btn => btn.deleteEvents());
-        magneticButtons = [];
     })
+    magneticButtons.forEach(btn => btn.deleteEvents());
+    magneticButtons = [];
 };
 
 export const contactPage = {beforeLeave, beforeOnce, beforeEnter};

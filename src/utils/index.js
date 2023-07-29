@@ -28,3 +28,22 @@ window.addEventListener('resize', () => winsize = getWinSize());
 
 export let mousepos = {x: 0, y: 0};
 window.addEventListener('mousemove', ev => mousepos = getMousePos(ev));
+
+
+export function setNavLinkActive(currPath) {
+    const navLinks = document.querySelectorAll(".nav-link");
+    switch (currPath) {
+        case "/index.html":
+            navLinks[0].classList.add("active")
+            break;
+        case "/about.html":
+            navLinks[1].classList.add("active");
+            break;
+        case "/showcase.html":
+            navLinks[2].classList.add("active");
+            break;
+        case "/contact.html":
+            navLinks[3].classList.add("active");
+            break;
+    }
+}

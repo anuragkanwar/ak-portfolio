@@ -69,3 +69,36 @@
     transform: scale(0.55)
   }
 }
+
+
+@media screen and (max-width: 600px) {
+  .hero {
+    .hero-top {
+      .hero-top-title {
+        font-size: 16vw;
+        text-align: left;
+      }
+    }
+
+    .hero-mid {
+    }
+
+    .hero-bottom {
+      justify-content: flex-end;
+
+      .hero-title {
+        font-size: 16vw;
+      }
+
+      .hero-bottom-left, .hero-bottom-mid {
+        display: none;
+      }
+
+      .hero-bottom-mid {
+        .hero-subtitle {
+        }
+      }
+    }
+  }
+
+}
